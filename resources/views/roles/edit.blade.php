@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Roles / Create
+                Roles / Edit
             </h2>
             <a href="{{ route('roles.store') }}" class="bg-slate-700 hover:bg-slate-600 text-sm rounded-md text-white px-3 py-3">Back</a>
         </div>
@@ -11,12 +11,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('roles.index') }}" method="post">
+                    <form action="{{ route('roles.update',$role->id) }}" method="post">
                         @csrf
                         <div>
                             <label for="" class="text-lg font-medium">Name</label>
                             <div class="my-3">
-                                <input name="name" value="{{ old('name') }}" placeholder="Enter Name"
+                                <input name="name" value="{{ old('name',$role->name) }}" placeholder="Enter Name"
                                     type="text"class="border-gray-300 shadow-sm w-1/2 rounded-lg ">
                                 @error('name')
                                     <p class="text-red-400 font-medium">{{ $message }}</p>
@@ -27,7 +27,7 @@
                                 @if ($permissions->isNotEmpty())
                                     @foreach ($permissions as $permission)
                                         <div class="mt-3">
-                                            <input type="checkbox" id="permission-{{ $permission->id }}" class="rounded" name="permissions[]"
+                                            <input {{ ($hasPermissions)->contains($permission->name) ? 'checked' : '' }} type="checkbox" id="permission-{{ $permission->id }}" class="rounded" name="permissions[]"
                                             value="{{ $permission->name }}">
                                             <label for="permission-{{ $permission->id }}">{{ $permission->name }}</label>
 

@@ -21,6 +21,7 @@
                         <th class="px-6 py-3 text-left" width="60">Name</th>
                         <th class="px-6 py-3 text-left" width="60">Permissions</th>
                         <th class="px-6 py-3 text-left"width="120">Create</th>
+                        <th class="px-6 py-3 text-left" width="160">Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -39,6 +40,15 @@
                                 <td class="px-6 py-3 text-left">
                                     {{ \Carbon\Carbon::parse($role->created_at)->format('d M, Y') }}
                                 </td>
+                                <td class="px-6 py-3 text-left  justify-center">
+
+                                    <a href="{{ route('roles.edit', $role->id) }}"
+                                        class="bg-gray-700 text-sm rounded-md text-white px-3 py-2
+                                    hover:bg-green-600">Edit</a>
+                                    <a href="javascript:void(0);" onclick="deleteRole({{ $role->id }})"
+                                        class="bg-red-700 text-sm rounded-md text-white px-3 py-2
+                                    hover:bg-red-600">Delete</a>
+                                </td>
                             </tr>
                         @endforeach
                     @endif
@@ -47,17 +57,17 @@
             </table>
 
             <div class="py-3 my-3">
-                {{ $roles->links() }}    
+                {{ $roles->links() }}
             </div>
         </div>
 
         <x-slot name="script">
             <script type="text/javascript">
-                function deletePermission(id) {
+                function deleteRole(id) {
                     if (confirm("Are you sure you want to delete?")) {
                         $.ajax({
-                            url: '{{ route('permissions.destroy') }}', // Corrected 'destory' to 'destroy'
-                            type: 'DELETE',
+                            url: '{{ route('roles.destroy') }}', // Corrected 'destory' to 'destroy'
+                            type: 'delete',
                             data: {
                                 id: id
                             },
@@ -67,7 +77,7 @@
                             },
                             success: function(response) {
                                 if (response.status) {
-                                    window.location.href = '{{ route('permissions.index') }}';
+                                    window.location.href = '{{ route('roles.index') }}';
                                 } else {
                                     alert(response.message);
                                 }

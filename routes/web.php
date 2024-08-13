@@ -4,6 +4,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Contracts\Role;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function () {
    Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
    Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
    Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
+   Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+   Route::post('/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
+   Route::delete('/permissions', [RoleController::class, 'destroy'])->name('roles.destroy');
 
 });
 
